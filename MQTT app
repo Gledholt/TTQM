@@ -190,22 +190,22 @@ def vMQTT() {
 /*                        
 List myDeviceList = []
 lots.each { myDevice ->
-  if(myDevice.name != 'xyz') {
+  if(myDevice.displayName != 'xyz') {
      myDeviceList.add(myDevice.id)
   }
 }      
 switches.each { myDevice ->
-  if(myDevice.name != 'xyz') {
+  if(myDevice.displayName != 'xyz') {
      myDeviceList.add(myDevice.id)
   }
 }       
 dimmers.each { myDevice ->
-  if(myDevice.name != 'xyz') {
+  if(myDevice.displayName != 'xyz') {
      myDeviceList.add(myDevice.id)
   }
 }
 carbonmonoxidesensors.each { myDevice ->
-  if(myDevice.name != 'xyz') {
+  if(myDevice.displayName != 'xyz') {
      myDeviceList.add(myDevice.id)
   }
 }                
@@ -239,7 +239,7 @@ app.updateSettingWithType("lots", myDeviceList, "capability")
                 }
                 }
 
-                log("Original data for $dev.name was $data2 ","DEBUG")
+                log("Original data for $dev.displayName was $data2 ","DEBUG")
                 log ("Complete Topic Mappings are now $atomicState.Mappings", "DEBUG")
 
 	        }   
@@ -425,7 +425,7 @@ assisted=false   // beta2 and beta3 .. disabling this feature temporarily as con
 							if ((settings[var]!=null) && (settings[var]!=data)) {
 /*                                
                                 log ("  ","KH")
-                                log ("[$i] UPDATE device $vDev.name - ${atomicState.attList[i]}_Topic","KH")
+                                log ("[$i] UPDATE device $vDev.displayName - ${atomicState.attList[i]}_Topic","KH")
                                 log ("[$i] UPDATING - from " + vDev.getDataValue("${atomicState.attList[i]}_Topic"),"KH")
 */
                                 vDev.updateDataValue("${atomicState.attList[i]}_Topic", settings[var].trim())
@@ -463,7 +463,7 @@ assisted=false   // beta2 and beta3 .. disabling this feature temporarily as con
                             if ((settings[varAtt]!=null) && (settings[varAtt]!=dataAtt)) {
 /*                      
                                 log ("      ","KH")
-                                log ("[$i] UPDATE device $vDev.name - ${atomicState.attList[i]}_MAP","KH")
+                                log ("[$i] UPDATE device $vDev.displayName - ${atomicState.attList[i]}_MAP","KH")
                                 log ("[$i] UPDATING - from " + vDev.getDataValue("${atomicState.attList[i]}_MAP"),"KH")
 
                                 log ("[$i] UPDATED to ${settings[varAtt]}","KH")
@@ -489,7 +489,7 @@ assisted=false   // beta2 and beta3 .. disabling this feature temporarily as con
                                 //if (settings[varJSON]!=dataJSON) {
                                 if (vJSON!=dataJSON) {
                                 log ("       ","KH")
-                                log ("[$i] UPDATE device $vDev.name - ${atomicState.attList[i]}_JSON","KH")
+                                log ("[$i] UPDATE device $vDev.displayName - ${atomicState.attList[i]}_JSON","KH")
                                 log ("[$i] UPDATING - from " + vDev.getDataValue("${atomicState.attList[i]}_MAP"),"KH")
                                 vDev.updateDataValue("${atomicState.attList[i]}_JSON", vJSON)
                                 log ("[$i] UPDATED to $vJSON","KH")
@@ -503,7 +503,7 @@ assisted=false   // beta2 and beta3 .. disabling this feature temporarily as con
                             if ((settings[varCmd]!=null) && (settings[varCmd]!=dataC)) {
                                 // ToDo - be able to send a JSON command
                                 log ("  ","DEBUG")
-                                log ("[$i] UPDATE device $vDev.name - ${atomicState.attList[i]}_Cmd","DEBUG")
+                                log ("[$i] UPDATE device $vDev.displayName - ${atomicState.attList[i]}_Cmd","DEBUG")
                                 log ("[$i] UPDATING - from " + vDev.getDataValue("${atomicState.attList[i]}_Cmd"),"DEBUG")
                                 vDev.updateDataValue("${atomicState.attList[i]}_Cmd", settings[varCmd].trim())
                                 //myVal=settings[varCmd].trim()
@@ -594,10 +594,10 @@ assisted=false   // beta2 and beta3 .. disabling this feature temporarily as con
 
                         }
                         if (!newDev)  {
-                            //log ("2a Updating old ${atomicState.attList[i]}_MAP with ${settings[varAtt]} on $vDev.name","KH")
+                            //log ("2a Updating old ${atomicState.attList[i]}_MAP with ${settings[varAtt]} on $vDev.displayName","KH")
                             //if (settings[varAtt] != null) vDev.updateDataValue("${atomicState.attList[i]}_MAP", settings[varAtt])// $settings?.stateOFF)
                             if (settings[varAtt] != null) vDev.updateDataValue("${attrList[i]}_MAP", settings[varAtt])// $settings?.stateOFF)
-                            //log.debug "2b Updating old ${atomicState.attList[i]}_JSON with ${settings[varJSON]} on $vDev.name"
+                            //log.debug "2b Updating old ${atomicState.attList[i]}_JSON with ${settings[varJSON]} on $vDev.displayName"
                             //if ((settings[varJSON] != null)&&(settings[varJSON] != ' ')) vDev.updateDataValue("${atomicState.attList[i]}_JSON", settings[varJSON])// $settings?.stateOFF)
                         }
                     }
@@ -620,7 +620,7 @@ assisted=false   // beta2 and beta3 .. disabling this feature temporarily as con
                 if (atomicState.attList[i] != "level") {
                      input(name: varJSON, type: "text",defaultValue: defJSON, title: "&nbsp &nbsp &nbsp &nbsp JSON {attribute:} name (optional) for <b>${atomicState.attList[i]}</b> attribute" , required: false, submitOnChange: true)
                     if (!newDev)  {
-                        log.debug "3a Updating old ${atomicState.attList[i]}_JSON with ${settings[varJSON]} on $vDev.name"
+                        log.debug "3a Updating old ${atomicState.attList[i]}_JSON with ${settings[varJSON]} on $vDev.displayName"
                         if ((settings[varJSON] != null)&&(settings[varJSON] != ' ')) {
                             vDev.updateDataValue("${atomicState.attList[i]}_JSON", settings[varJSON])
                         }
@@ -876,7 +876,7 @@ def createVirtual () {
                         att="$attr"
                         data=att+"_Topic"
                         if ((childDev.getDataValue(data))&&(childDev.getDataValue(data)!=" ")){
-                            log ("$childDev.name data $data already exists","DEBUG")
+                            log ("$childDev.displayName data $data already exists","DEBUG")
                             if (att=='level') { 
                                 if (!childDev.getDataValue("max_Level")) childDev.updateDataValue("max_Level", "100")
                             } 
@@ -890,7 +890,7 @@ def createVirtual () {
                         if (!sensor) {
                             data=att+"_Cmd"
                             if ((childDev.getDataValue(data))&&(childDev.getDataValue(data)!=" ")){
-                                 log ("$childDev.name data $data already exists","DEBUG")
+                                 log ("$childDev.displayName data $data already exists","DEBUG")
 
                             }
                             else {
@@ -906,7 +906,7 @@ def createVirtual () {
                String atts = "${attr2List[j].getPossibleValues()}" 
 
               if ((childDev.getDataValue("${attr2List[j]}_MAP"))&&(childDev.getDataValue("${attr2List[j]}_MAP")!=" ")){                          
-                log ("$childDev.name ${attr2List[j]}_MAP already exists","TRACE")
+                log ("$childDev.displayName ${attr2List[j]}_MAP already exists","TRACE")
               }
               else {
                  log ("Adding the default attribute values to ${attr2List[j]}_MAP","KH")
@@ -1251,10 +1251,12 @@ def abort (where) {
 }
 
 def addProperty(key,value,device=null) {
+    att=value
     //atomicState.properties=[:]
     mqtt = getChildDevice("MQTT: Child device driver")
     def temp=atomicState.properties
     if (temp[key] == null) {
+        if (att=='ramp') log ("key was null for $device[$value]","KH")
         temp[key] = value
         if (device!=null)   device.updateDataValue("properties", value)
         mqtt.publishMsg (key+'/$properties',"${temp[key]}",1,true)
@@ -1265,6 +1267,7 @@ def addProperty(key,value,device=null) {
         }
     temp[key] = temp[key] + "," + value
     value=temp[key]
+    if (att=='ramp') log ("Updating property data value $device[$value]","KH")
     if (device!=null)   device.updateDataValue("properties", value) //value)
     //mqtt.publishMsg (key+'/$properties',"${temp[key]}",1,true,atomicState.suppress)
     mqtt.publishMsg (key+'/$properties',"${temp[key]}",1,true)
@@ -2089,7 +2092,7 @@ def synchDevices() {
             if (settings?.HADiscovery && (!publishList.containsKey(myName))) {
                 publishList.put(it.id,[myName,"light","colour"])
             }
-			mydName = it.name
+			mydName = it.displayName
 			myName = it.displayName
 		    //for (String item : MQTTRGB) {
 			    //switchedDim(null, myName,"onoff", it.currentSwitch,it.id)  //?? handle in colourDevices() ??
@@ -2129,7 +2132,7 @@ def synchDevices() {
                 publishList.put(it.id,[myName,"light","colour"])
             }
             
-			mydName = it.name
+			mydName = it.displayName
 			myName = it.displayName
 			//switchedDim(null, myName,"onoff", it.currentSwitch,it.id)
 			//dimmed(null, myName, "dim", it.currentLevel,it.id)
@@ -2187,8 +2190,8 @@ def synchDevices() {
                 //publishList.put(it.id,[myName,"light","colour"])   
                 }
                 
-            sTopic="homie/${atomicState.normHubName}/${normalize(it.name)}"
-            mqtt.publishMsg (sTopic+'/$name',it.name,1,true)
+            sTopic="homie/${atomicState.normHubName}/${normalize(it.displayName)}"
+            mqtt.publishMsg (sTopic+'/$name',it.displayName,1,true)
             // $properties
             // $type
             // do an attribute to 
@@ -2266,7 +2269,7 @@ def synchDevices() {
     loopDev = (settings?.listAll)    // These are the devices to list to Hubitat capabilities/attributes topic 
 	if (loopDev != null){
 			loopDev.each{
-			mydName = it.name
+			mydName = it.displayName
 			myName = it.displayName
 			def attrs = it.supportedAttributes
 			if (attrs.size()>1) multiple=true else multiple=false
@@ -2368,7 +2371,7 @@ def synchDevices() {
             }
     }
     settings?.ramp.each { dev ->
-        normName=normalize(dev.name)
+        normName=normalize(dev.displayName)
         sTopic="homie/${atomicState.normHubName}/${normName}"
             if (dev.hasCommand ("setLevel")) {
                 addProperty(sTopic,'ramp',dev)
@@ -2395,7 +2398,7 @@ def devLoop(deviceList, attribute, handler, type='none'){  // This registers a s
         mqtt = getChildDevice("MQTT: Child device driver")
 		deviceList.each{ dev->
             
-			mydName = dev.name
+			mydName = dev.displayName
 			myName = dev.displayName
                 normName=normalize(myName)
             	sTopic="homie/${atomicState.normHubName}/${normName}"
@@ -2408,7 +2411,7 @@ def devLoop(deviceList, attribute, handler, type='none'){  // This registers a s
                 def attrs = dev.supportedAttributes  //this gets all attributes in variable, custom etc
             if (type == 'none') type=attribute
 			if(dev.currentValue(attribute)!=null){
-				log ("## " + dev.name + " $attribute  ${dev.currentValue(attribute)}","TRACE") // + ${attrs}
+				log ("## " + dev.displayName + " $attribute  ${dev.currentValue(attribute)}","TRACE") // + ${attrs}
 				if (attrs.size()>1) multiple=true else multiple=false // TODO BUG Need to handle multiple attributes here
                 log ("#### $attribute sensor #### ${myName} has attributes ${attrs}","TRACE")  // not all are sensors
 
@@ -2433,7 +2436,7 @@ def devLoopAll(dev, attribute, handler, type='none'){  // This registers all att
     if (dev != null){
         mqtt = getChildDevice("MQTT: Child device driver")
 //		deviceList.each{ dev->
-			mydName = dev.name
+			mydName = dev.displayName
 			myName = dev.displayName
                 normName=normalize(myName)
             	sTopic="homie/${atomicState.normHubName}/${normName}"
@@ -2458,7 +2461,7 @@ def devLoopAll(dev, attribute, handler, type='none'){  // This registers all att
 /*  
             if (type == 'none') type=attribute
 			if(dev.currentValue(attribute)!=null){
-				log ("## " + dev.name + " $attribute  ${dev.currentValue(attribute)}","TRACE") // + ${attrs}
+				log ("## " + dev.displayName + " $attribute  ${dev.currentValue(attribute)}","TRACE") // + ${attrs}
 				if (attrs.size()>1) multiple=true else multiple=false // TODO BUG Need to handle multiple attributes here
                 log ("#### $attribute sensor #### ${myName} has attributes ${attrs}","TRACE")  // not all are sensors
 
@@ -2679,7 +2682,7 @@ def HADiscoveryAdvertise (name, type="none", category="none", id='0', payON="tru
         pID=''
     String ID = "${id}"
     if (ID != '0') {
-        pID= ',"device": {"identifiers": "HE_'+ ID + '","name": "'+name+ '","sw_version":"pre5 beta 3d","model":"'+"${atomicState.normHubName}"+'","manufacturer":"Hubitat"}'  // TODO Investigate if this can work
+        pID= ',"device": {"identifiers": "HE_'+ ID + '","name": "'+name+ '","sw_version":"pre6 beta 3d","model":"'+"${atomicState.normHubName}"+'","manufacturer":"Hubitat"}'  // TODO Investigate if this can work
     }
     else log ("ID is 0 for device $name  $type","WARN")
 		pON = ',"payload_on":"true"'  //default for booleans in homie
@@ -5685,7 +5688,7 @@ def deviceAction (child,devType,value,attr=null)  {
 					 }
 					else {
                         val = convertLevel (value.toInteger(), LookupLevel.toInteger())
-						log ( " The numeric payload for " + child.name + " was converted from " + value + " to " + val, "DEBUG")
+						log ( " The numeric payload for " + child.displayName + " was converted from " + value + " to " + val, "DEBUG")
 						//if (vDev) child.setLevel(intLevel,1)
                         child.setLevel(val,1)
                         atomicState.lastDev="$child [$val]"   // This normally updates to the last value on MQTT ie the MAP vlaue
@@ -6641,6 +6644,8 @@ def sendPayload(topic,payload) {
 
 def findDeviceByName(name) {
     matchDevice = null
+    
+    log  ("Prime","LOG")
     settingsDevices = [settings?.switches, settings?.dimmers, settings?.lights, settings?.colour, settings?.colourT, settings?.colourMode, settings?.contactSensors]
     //atomicState.test=settingsDevices
     settingsDevices.find{
@@ -6655,7 +6660,7 @@ def findDeviceByName(name) {
         }
     }
     if (matchDevice != null) return matchDevice
-
+    log  ("Mid","LOG")
     
     settingsDevices = [settings?.everything, settings?.alarms, settings?.batterysensors, settings?.bulbs, settings?.buttons, settings?.buttonshold, settings?.buttonsPush,
         settings?.buttonsrelease, settings?.buttonsdtap, settings?.carbonmonoxidesensors, settings?.chimes, 
@@ -6675,8 +6680,9 @@ def findDeviceByName(name) {
         }
     }
     if (matchDevice != null) return matchDevice
+    log  ("Low","LOG")
     
-    settingsDevices = [settings?.globvars, settings?.gvars]  //search globals last 
+    settingsDevices = [settings?.globVars, settings?.gVars]  //search globals last 
     settingsDevices.find{
         if (matchDevice != null) {
             return true
@@ -6688,6 +6694,8 @@ def findDeviceByName(name) {
             }
         }
     }
+    if (matchDevice==null) log  ("Fail","LOG")
+    
     return matchDevice // could be null as nothing matched
     
     
@@ -6699,7 +6707,7 @@ def commandP(name, state, payload, fullPayload, cmd, topic, json) { // 'set' com
     //def data = parseJson(evt.data)
     log("MQTT set command received for " + name + " " + cmd + " " + state + " " + topic + " " + payload, "DEBUG")
     if (state=='' || state==null) {
-        log ("An empty or null state value was received from a ../set topic and was BLOCKED from writing to an attribute as it would set it to null","WARN")
+        log ("An empty or null state value was received from a ../set topic {$name $state] and was BLOCKED from writing to an attribute as it would set it to null","WARN")
         return
     }
     normName = name
@@ -6724,7 +6732,7 @@ def commandP(name, state, payload, fullPayload, cmd, topic, json) { // 'set' com
     if (matchName == "hub") {
         if (cmd == "mode") {
             if (location.mode != state) {
-                if (location.modes?.find {it.name==state}) 
+                if (location.modes?.find {it.displayName==state}) 
                 {
                     location.setMode(state)
                 } else {
@@ -6810,7 +6818,8 @@ def commandP(name, state, payload, fullPayload, cmd, topic, json) { // 'set' com
     }
     }
     matchDevice = findDeviceByName(matchName)
-    log.error "matchDevice is $matchDevice"
+    if (matchDevice==null) log.error "matchDevice is $matchDevice $matchName"
+    
     if (!checkProperty(matchDevice,cmd)) {
         log ("This command is not permitted to this device $matchDevice","WARN")
         return
@@ -7009,7 +7018,7 @@ def commandP(name, state, payload, fullPayload, cmd, topic, json) { // 'set' com
 		}
     } else if (cmd == "heating-setpoint" || cmd == "cooling-setpoint" || cmd == "mode" || cmd == "fanmode") { // Thermostat temporary handler shouldnt be in sensors
 		if (matchDevice != null) {
-			//log ("Changing $cmd of ${matchDevice.name} to $state","ERROR")                        
+			//log ("Changing $cmd of ${matchDevice.displayName} to $state","ERROR")                        
 			if (cmd == "heating-setpoint") {
 				Float setTemp = state.toFloat() // string seemed to error -- just rechecking
 				matchDevice.setHeatingSetpoint(setTemp)
